@@ -20,6 +20,7 @@ export default function QueryProcessor(query: string): string {
   const largestNumberRegex = /Which of the following numbers is the largest: ([\d, ]+)\?/;
   const squareCubeRegex = /Which of the following numbers is both a square and a cube: ([\d, ]+)\?/;
   const multiplicationRegex = /What is (\d+) multiplied by (\d+)\?/;
+  const subtractionRegex = /What is (\d+) minus (\d+)\?/;
 
   let match;
 
@@ -58,6 +59,14 @@ export default function QueryProcessor(query: string): string {
     const num1 = parseInt(match[1], 10);
     const num2 = parseInt(match[2], 10);
     return (num1 * num2).toString();
+  }
+
+  // Handle subtraction queries
+  match = query.match(subtractionRegex);
+  if (match) {
+    const num1 = parseInt(match[1], 10);
+    const num2 = parseInt(match[2], 10);
+    return (num1 - num2).toString();
   }
 
   return "";
