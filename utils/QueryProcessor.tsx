@@ -8,17 +8,17 @@ export default function QueryProcessor(query: string): string {
   }
 
   if (query.toLowerCase().includes("andrew id")) {
-    //TODO add your Andrew ID below
     //TODO update the corresponding test case in __tests__
-    return ( "sfaraz" );
+    return "sfaraz";
   }
 
   if (query.includes("What is your name?")) {
-    return ("sfaraz")
+    return "GitHub Copilot";
   }
 
   const additionRegex = /What is (\d+) plus (\d+)\?/;
   const largestNumberRegex = /Which of the following numbers is the largest: ([\d, ]+)\?/;
+  const squareCubeRegex = /Which of the following numbers is both a square and a cube: ([\d, ]+)\?/;
 
   let match;
 
@@ -36,6 +36,19 @@ export default function QueryProcessor(query: string): string {
     const numbers = match[1].split(',').map(num => parseInt(num.trim(), 10));
     const largestNumber = Math.max(...numbers);
     return largestNumber.toString();
+  }
+
+  // Handle square and cube queries
+  match = query.match(squareCubeRegex);
+  if (match) {
+    const numbers = match[1].split(',').map(num => parseInt(num.trim(), 10));
+    const isSquareAndCube = (num: number) => {
+      const sqrt = Math.sqrt(num);
+      const cbrt = Math.cbrt(num);
+      return Number.isInteger(sqrt) && Number.isInteger(cbrt);
+    };
+    const result = numbers.find(isSquareAndCube);
+    return result !== undefined ? result.toString() : "None";
   }
 
   return "";
