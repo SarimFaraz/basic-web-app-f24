@@ -16,7 +16,7 @@ export default function QueryProcessor(query: string): string {
     return "GitHub Copilot";
   }
 
-  const additionRegex = /What is (\d+) plus (\d+)\?/;
+  const additionRegex = /What is (\d+) plus (\d+)(?: plus (\d+))?\?/;
   const largestNumberRegex = /Which of the following numbers is the largest: ([\d, ]+)\?/;
   const squareCubeRegex = /Which of the following numbers is both a square and a cube: ([\d, ]+)\?/;
   const multiplicationRegex = /What is (\d+) multiplied by (\d+)\?/;
@@ -30,7 +30,8 @@ export default function QueryProcessor(query: string): string {
   if (match) {
     const num1 = parseInt(match[1], 10);
     const num2 = parseInt(match[2], 10);
-    return (num1 + num2).toString();
+    const num3 = match[3] ? parseInt(match[3], 10) : 0;
+    return (num1 + num2 + num3).toString();
   }
 
   // Handle largest number queries
