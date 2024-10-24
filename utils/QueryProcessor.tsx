@@ -22,6 +22,7 @@ export default function QueryProcessor(query: string): string {
   const multiplicationRegex = /What is (\d+) multiplied by (\d+)\?/;
   const subtractionRegex = /What is (\d+) minus (\d+)\?/;
   const primeNumberRegex = /Which of the following numbers are primes: ([\d, ]+)\?/;
+  const exponentiationRegex = /What is (\d+) to the power of (\d+)\?/;
 
   let match;
 
@@ -84,6 +85,14 @@ export default function QueryProcessor(query: string): string {
     };
     const primes = numbers.filter(isPrime);
     return primes.join(', ');
+  }
+
+  // Handle exponentiation queries
+  match = query.match(exponentiationRegex);
+  if (match) {
+    const base = parseInt(match[1], 10);
+    const exponent = parseInt(match[2], 10);
+    return Math.pow(base, exponent).toString();
   }
 
   return "";
