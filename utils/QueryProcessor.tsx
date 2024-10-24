@@ -24,6 +24,7 @@ export default function QueryProcessor(query: string): string {
   const primeNumberRegex = /Which of the following numbers are primes: ([\d, ]+)\?/;
   const exponentiationRegex = /What is (\d+) to the power of (\d+)\?/;
   const complexMathRegex = /What is (\d+) plus (\d+) multiplied by (\d+)\?/;
+  const complexMathWithMultiplicationRegex = /What is (\d+) multiplied by (\d+) plus (\d+)\?/;
 
   let match;
 
@@ -98,6 +99,22 @@ export default function QueryProcessor(query: string): string {
   }
 
   // Handle exponentiation queries
+  match = query.match(exponentiationRegex);
+  if (match) {
+    const base = parseInt(match[1], 10);
+    const exponent = parseInt(match[2], 10);
+    return Math.pow(base, exponent).toString();
+  }
+  // Handle complex math with multiplication queries
+  match = query.match(complexMathWithMultiplicationRegex);
+  if (match) {
+    const num1 = parseInt(match[1], 10);
+    const num2 = parseInt(match[2], 10);
+    const num3 = parseInt(match[3], 10);
+  return (num1 * num2 + num3).toString();
+  }
+
+    // Handle exponentiation queries
   match = query.match(exponentiationRegex);
   if (match) {
     const base = parseInt(match[1], 10);
