@@ -17,38 +17,26 @@ export default function QueryProcessor(query: string): string {
     return ("sfaraz")
   }
 
-  if (query.includes("What is 22 plus 82?")) {
-    return ("104")
+  const additionRegex = /What is (\d+) plus (\d+)\?/;
+  const largestNumberRegex = /Which of the following numbers is the largest: ([\d, ]+)\?/;
+
+  let match;
+
+  // Handle addition queries
+  match = query.match(additionRegex);
+  if (match) {
+    const num1 = parseInt(match[1], 10);
+    const num2 = parseInt(match[2], 10);
+    return (num1 + num2).toString();
   }
 
-  if (query.includes("What is 89 plus 99?")) {
-    return ("188")
+  // Handle largest number queries
+  match = query.match(largestNumberRegex);
+  if (match) {
+    const numbers = match[1].split(',').map(num => parseInt(num.trim(), 10));
+    const largestNumber = Math.max(...numbers);
+    return largestNumber.toString();
   }
-
-  if (query.includes("What is 89 plus 99?")) {
-    return ("188")
-  }
-
-  if (query.includes("What is 89 plus 99?")) {
-    return ("188")
-  }
-
-  if (query.includes("What is 89 plus 92?")) {
-    return ("181")
-  }
-
-  if (query.includes("What is 44 plus 36?")) {
-    return ("80")
-  }
-
-  if (query.includes("Which of the following numbers is the largest: 24, 8, 20?")) {
-    return ("24")
-  }
-
-  if (query.includes("Which of the following numbers is the largest: 67, 87, 73?")) {
-    return ("87")
-  }
-
 
   return "";
 }
