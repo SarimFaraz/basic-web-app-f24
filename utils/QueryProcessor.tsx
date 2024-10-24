@@ -23,8 +23,18 @@ export default function QueryProcessor(query: string): string {
   const subtractionRegex = /What is (\d+) minus (\d+)\?/;
   const primeNumberRegex = /Which of the following numbers are primes: ([\d, ]+)\?/;
   const exponentiationRegex = /What is (\d+) to the power of (\d+)\?/;
+  const complexMathRegex = /What is (\d+) plus (\d+) multiplied by (\d+)\?/;
 
   let match;
+
+  // Handle complex math queries
+  match = query.match(complexMathRegex);
+  if (match) {
+    const num1 = parseInt(match[1], 10);
+    const num2 = parseInt(match[2], 10);
+    const num3 = parseInt(match[3], 10);
+    return (num1 + num2 * num3).toString();
+  }
 
   // Handle addition queries
   match = query.match(additionRegex);
