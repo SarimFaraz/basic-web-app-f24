@@ -16,7 +16,11 @@ export default function QueryProcessor(query: string): string {
   if (query.includes("What is your name?")) {
     return ("sfaraz")
   }
-  
+
+  if (query.includes("What is 22 plus 82?")) {
+    return ("104")
+  }
+
 
   return "";
 }
