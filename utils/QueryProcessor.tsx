@@ -21,6 +21,7 @@ export default function QueryProcessor(query: string): string {
   const squareCubeRegex = /Which of the following numbers is both a square and a cube: ([\d, ]+)\?/;
   const multiplicationRegex = /What is (\d+) multiplied by (\d+)\?/;
   const subtractionRegex = /What is (\d+) minus (\d+)\?/;
+  const primeNumberRegex = /Which of the following numbers are primes: ([\d, ]+)\?/;
 
   let match;
 
@@ -67,6 +68,21 @@ export default function QueryProcessor(query: string): string {
     const num1 = parseInt(match[1], 10);
     const num2 = parseInt(match[2], 10);
     return (num1 - num2).toString();
+  }
+
+  // Handle prime number queries
+  match = query.match(primeNumberRegex);
+  if (match) {
+    const numbers = match[1].split(',').map(num => parseInt(num.trim(), 10));
+    const isPrime = (num: number) => {
+      if (num <= 1) return false;
+      for (let i = 2; i <= Math.sqrt(num); i++) {
+        if (num % i === 0) return false;
+      }
+      return true;
+    };
+    const primes = numbers.filter(isPrime);
+    return primes.join(', ');
   }
 
   return "";
